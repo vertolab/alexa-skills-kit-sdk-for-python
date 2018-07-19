@@ -180,10 +180,12 @@ class SkillBuilder(object):
         :return: Handler function to tag on AWS Lambda console.
         """
         def wrapper(event, context):
+            json_event = json.dumps(event)
+            print(json_event)
             # type: (RequestEnvelope, T) -> Dict[str, T]
             skill = Skill(skill_configuration=self.skill_configuration)
             request_envelope = skill.serializer.deserialize(
-                payload=json.dumps(event), obj_type=RequestEnvelope)
+                payload=json_event, obj_type=RequestEnvelope)
             response_envelope = skill.invoke(
                 request_envelope=request_envelope, context=context)
             return skill.serializer.serialize(response_envelope)
