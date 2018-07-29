@@ -188,7 +188,9 @@ class SkillBuilder(object):
                 payload=json_event, obj_type=RequestEnvelope)
             response_envelope = skill.invoke(
                 request_envelope=request_envelope, context=context)
-            return skill.serializer.serialize(response_envelope)
+            serialized_response = skill.serializer.serialize(response_envelope)
+            print(json.dumps(serialized_response))
+            return serialized_response
         return wrapper
 
     def request_handler(self, can_handle_func):
