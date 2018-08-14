@@ -59,6 +59,7 @@ class ResponseFactory(object):
             access from self.response.
         :rtype: ResponseFactory
         """
+        speech = self.__encode_ssml(speech)
         ssml = "<speak>{}</speak>".format(self.__trim_outputspeech(
             speech_output=speech))
         self.response.output_speech = SsmlOutputSpeech(ssml=ssml)
@@ -78,6 +79,7 @@ class ResponseFactory(object):
             access from self.response.
         :rtype: ResponseFactory
         """
+        reprompt = self.__encode_ssml(reprompt)
         ssml = "<speak>{}</speak>".format(self.__trim_outputspeech(
             speech_output=reprompt))
         output_speech = SsmlOutputSpeech(ssml=ssml)
@@ -151,6 +153,26 @@ class ResponseFactory(object):
         speech = speech_output.strip()
         if speech.startswith("<speak>") and speech.endswith("</speak>"):
             return speech[7:-8].strip()
+        return speech
+
+    def __encode_ssml(self, speech_output=None):
+        # type: (Union[str, None]) -> str
+        """Trims the output speech if it already has the
+        <speak></speak> tag.
+
+        :param speech_output: the output speech sent back to user.
+        :type speech_output: str
+        :return: the trimmed output speech.
+        :rtype: Union[bool, None]
+        """
+        if speech_output is None:
+            return ""
+        SUBSTITUTIONS = [
+            (' & ', ' and ')
+        ]
+        speech = speech_output
+        for find, replace in SUBSTITUTIONS:
+            speech = speech.replace(find, replace)
         return speech
 
     def __is_video_app_launch_directive_present(self):
