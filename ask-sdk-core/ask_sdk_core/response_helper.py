@@ -116,6 +116,8 @@ class ResponseFactory(object):
         """
         if self.response.directives is None:
             self.response.directives = []
+
+        if directive is None:
             return self
 
         if (directive is not None and
