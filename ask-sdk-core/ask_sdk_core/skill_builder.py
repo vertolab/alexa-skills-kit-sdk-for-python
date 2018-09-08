@@ -183,6 +183,8 @@ class SkillBuilder(object):
             event['msg'] = 'event'
             json_event = json.dumps(event)
             print(json_event)
+            if event.get('detail-type') == 'Scheduled Event':
+                return {}
             # type: (RequestEnvelope, T) -> Dict[str, T]
             skill = Skill(skill_configuration=self.skill_configuration)
             request_envelope = skill.serializer.deserialize(
