@@ -116,6 +116,7 @@ class ResponseFactory(object):
         """
         if self.response.directives is None:
             self.response.directives = []
+            return self
 
         if (directive is not None and
                 directive.object_type == "VideoApp.Launch"):
