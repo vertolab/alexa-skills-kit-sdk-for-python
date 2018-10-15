@@ -16,17 +16,16 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from boto3.exceptions import ResourceNotExistsError
 from ask_sdk_model import RequestEnvelope
 from ask_sdk_core.exceptions import PersistenceException
 from ask_sdk_dynamodb.adapter import DynamoDbAdapter
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class ResourceInUseException(Exception):
@@ -66,7 +65,7 @@ class TestDynamoDbAdapter(unittest.TestCase):
             "Partition Keygen provided incorrect input parameters during get "
             "attributes call")
         mock_table.get_item.assert_called_once_with(
-            Key={"id": "test_partition_key"}), (
+            Key={"id": "test_partition_key"}, ConsistentRead=True), (
             "Partition keygen provided incorrect key for get attributes call")
 
     def test_get_attributes_from_existing_table_custom_key_name_attribute_name(self):
@@ -93,7 +92,7 @@ class TestDynamoDbAdapter(unittest.TestCase):
             "Partition Keygen provided incorrect input parameters during get "
             "item call")
         mock_table.get_item.assert_called_once_with(
-            Key={"custom_key": "test_partition_key"}), (
+            Key={"custom_key": "test_partition_key"}, ConsistentRead=True), (
             "Partition keygen provided incorrect key for get attributes call")
 
     def test_get_attributes_from_existing_table_get_item_fails(self):
@@ -115,7 +114,7 @@ class TestDynamoDbAdapter(unittest.TestCase):
             "Get attributes didn't raise Persistence Exception when get item "
             "failed on dynamodb resource")
         mock_table.get_item.assert_called_once_with(
-            Key={"id": "test_partition_key"}), (
+            Key={"id": "test_partition_key"}, ConsistentRead=True), (
             "Partition keygen provided incorrect key for get attributes call")
 
     def test_get_attributes_from_existing_table_get_item_returns_no_item(self):
