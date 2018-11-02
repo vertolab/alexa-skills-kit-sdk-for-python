@@ -29,6 +29,12 @@ boiler-plate code.
 .. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io
     :alt: Read the docs
+.. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-runtime/
+    :alt: Version
+.. |Runtime Downloads| image:: https://pepy.tech/badge/ask-sdk-runtime
+    :target: https://pepy.tech/project/ask-sdk-runtime
+    :alt: Downloads
 .. |Core Version| image:: http://img.shields.io/pypi/v/ask-sdk-core.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-core/
     :alt: Version
@@ -56,6 +62,7 @@ Package Versions
 ====================================   ==================
 Package                                Version
 ------------------------------------   ------------------
+ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
@@ -191,6 +198,11 @@ Alexa tells the user whether the number she has in mind is higher or lower.
 Demonstrates use of persistence attributes and the persistence adapter
 in the SDK.
 
+`Audio Player <https://github.com/alexa/skill-sample-python-audio-player>`_
+~~~~~~~~~~~~~~~~~~
+
+Project that demonstrates how to use `AudioPlayer interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-audioplayer-interface-reference>`__ and `PlaybackController interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-playbackcontroller-interface-reference>`__ for building audioplayer skills in Alexa. The SingleStream skill sample demonstrates how to create a live radio skill, along with localization support. The MultiStream skill sample demonstrates how to create a basic podcast skill that can play multiple, pre-recorded audio streams.
+
 
 Alexa Capabilities supported by SDK
 -----------------------------------
@@ -230,6 +242,8 @@ Preview
 ~~~~~~~
 
 * `Connections <https://developer.amazon.com/blogs/alexa/post/7b332b32-893e-4cad-be07-a5877efcbbb4/skill-connections-preview-now-skills-can-work-together-to-help-customers-get-more-done>`__
+
+* `Alexa Presentation Language <https://developer.amazon.com/docs/alexa-presentation-language/apl-overview.html>`__
 
 
 Got Feedback?
