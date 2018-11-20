@@ -86,8 +86,6 @@ class ResponseFactory(object):
             speech_output=reprompt))
         output_speech = SsmlOutputSpeech(ssml=ssml)
         self.response.reprompt = Reprompt(output_speech=output_speech)
-        if not self.__is_video_app_launch_directive_present():
-            self.response.should_end_session = False
         return self
 
     def set_card(self, card):
@@ -122,10 +120,10 @@ class ResponseFactory(object):
         if directive is None:
             return self
 
-        if (directive is not None and
-                directive.object_type == "VideoApp.Launch"):
-            self.response.should_end_session = None
         self.response.directives.append(directive)
+        if directive.object_type == "VideoApp.Launch" or \
+                directive.object_type == "GameEngine.StartInputHandler":
+            self.set_should_end_session(None)
         return self
 
     def set_should_end_session(self, should_end_session):
@@ -139,8 +137,12 @@ class ResponseFactory(object):
             access from self.response.
         :rtype: ResponseFactory
         """
-        if not self.__is_video_app_launch_directive_present():
-            self.response.should_end_session = should_end_session
+        if should_end_session is not None and \
+                (self.__is_video_app_launch_directive_present() or \
+                self.__is_start_input_handler_directive_present()):
+            return self
+
+        self.response.should_end_session = should_end_session
         return self
 
     def set_can_fulfill_intent(self, can_fulfill_intent):
@@ -210,6 +212,23 @@ class ResponseFactory(object):
         for directive in self.response.directives:
             if (directive is not None and
                     directive.object_type == "VideoApp.Launch"):
+                return True
+        return False
+
+    def __is_start_input_handler_directive_present(self):
+        # type: () -> bool
+        """Checks if start input handler directive is present or not.
+
+        :return: boolean to show if video app launch directive is
+            present or not.
+        :rtype: bool
+        """
+        if self.response.directives is None:
+            return False
+
+        for directive in self.response.directives:
+            if (directive is not None and
+                    directive.object_type == "GameEngine.StartInputHandler"):
                 return True
         return False
 
