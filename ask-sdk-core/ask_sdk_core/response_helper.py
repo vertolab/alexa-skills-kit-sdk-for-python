@@ -104,6 +104,10 @@ class ResponseFactory(object):
         self.response.card = card
         return self
 
+    def add_directives(self, directives):
+        for directive in directives:
+            self.add_directive(directive)  
+
     def add_directive(self, directive):
         # type: (Directive) -> 'ResponseFactory'
         """Adds directive to response.
