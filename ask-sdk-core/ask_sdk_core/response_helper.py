@@ -104,11 +104,7 @@ class ResponseFactory(object):
         self.response.card = card
         return self
 
-    def add_directives(self, directives):
-        for directive in directives:
-            self.add_directive(directive)  
-
-    def add_directive(self, directive):
+    def add_directive(self, directives):
         # type: (Directive) -> 'ResponseFactory'
         """Adds directive to response.
 
@@ -121,13 +117,17 @@ class ResponseFactory(object):
         if self.response.directives is None:
             self.response.directives = []
 
-        if directive is None:
+        if directives is None:
             return self
 
-        self.response.directives.append(directive)
-        if directive.object_type == "VideoApp.Launch" or \
-                directive.object_type == "GameEngine.StartInputHandler":
-            self.set_should_end_session(None)
+        directives = directives if isinstance(directives,(list,)) else [directives]
+        
+        for directive in directives:
+            self.response.directives.append(directive)
+            if directive.object_type == "VideoApp.Launch" or \
+                    directive.object_type == "GameEngine.StartInputHandler":
+                self.set_should_end_session(None)
+                
         return self
 
     def set_should_end_session(self, should_end_session):
