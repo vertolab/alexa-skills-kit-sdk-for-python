@@ -107,9 +107,9 @@ class SkillBuilder(AbstractSkillBuilder):
             import base64
             zipped = base64.b64encode(zlib.compress(
                 json.dumps(serialized_response['sessionAttributes']).encode('utf-8'))).decode('utf-8')
-            # serialized_response['sessionAttributes'] = {
-            #     'zipped': zipped
-            # }
+            serialized_response['sessionAttributes'] = {
+                'zipped': zipped
+            }
             print(json.dumps(serialized_response))
             return serialized_response
         return wrapper
