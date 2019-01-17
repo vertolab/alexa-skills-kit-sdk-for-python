@@ -133,6 +133,7 @@ class DefaultSerializer(Serializer):
         zipped = payload.get('session', {}).get('attributes', {}).get('zipped')
         if zipped:
             import zlib
+            import base64
             del payload['session']['attributes']['zipped']
             payload['session']['attributes'] = json.loads(zlib.decompress(base64.b64decode(zipped)).decode('utf-8'))
 
