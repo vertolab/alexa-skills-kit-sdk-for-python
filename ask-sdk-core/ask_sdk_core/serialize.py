@@ -130,6 +130,12 @@ class DefaultSerializer(Serializer):
             raise SerializationException(
                 "Couldn't parse response body: {}".format(payload))
 
+        zipped = payload.get('session', {}).get('attributes', {}).get('zipped')
+        if zipped:
+            import zlib
+            del payload['session']['attributes']['zipped']
+            payload['session']['attributes'] = json.loads(zlib.decompress(base64.b64decode(zipped)).decode('utf-8'))
+
         return self.__deserialize(payload, obj_type)
 
     def __deserialize(self, payload, obj_type):
