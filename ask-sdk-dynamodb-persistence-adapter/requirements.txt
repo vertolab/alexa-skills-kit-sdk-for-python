@@ -1,2 +1,2 @@
 boto3
-ask-sdk-core>=1.1.0
+git+git://github.com/vertolab/alexa-skills-kit-sdk-for-python#subdirectory=ask-sdk-core
